@@ -1,7 +1,8 @@
 package com.example.moneytransfer.model;
 import jakarta.persistence.*;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import java.math.*;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -19,14 +20,27 @@ public class User {
     private String password;
 
 
+    private String country;
+
+    @NotNull(message = "Date of Birth is required")
+    @Temporal(TemporalType.DATE)
+    private Date dateOfBirth;
+
+    @DecimalMin(value = "0.0", inclusive = true)
+    private BigDecimal balance = BigDecimal.ZERO;
+
+
 
     public User() {
     }
 
-    public User(String name, String email, String password) {
+    public User(String name, String email, String password, String country, Date dateOfBirth) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.country = country;
+        this.dateOfBirth = dateOfBirth;
+        this.balance = BigDecimal.ZERO;
     }
 
     public Long getId() {
@@ -59,6 +73,30 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 }
 
