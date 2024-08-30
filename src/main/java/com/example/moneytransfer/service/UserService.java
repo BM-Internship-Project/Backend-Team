@@ -5,10 +5,16 @@ import com.example.moneytransfer.model.User;
 import com.example.moneytransfer.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.*;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -19,7 +25,10 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     public User registerUser(@Valid UserRegistrationDto registrationDto) throws IllegalArgumentException {
         // Check if the password is strong
@@ -57,12 +66,33 @@ public class UserService {
 
         // Encode the password
         String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
+        String accountNumber = generateAccountNumber();
+        BigDecimal initialBalance = generateInitialBalance();
 
         // Create a new user instance
-        User user = new User(registrationDto.getName(), registrationDto.getEmail(), encodedPassword, registrationDto.getCountry(), registrationDto.getDateOfBirth());
+        User user = new User(registrationDto.getName(), registrationDto.getEmail(), encodedPassword, registrationDto.getCountry(), registrationDto.getDateOfBirth(), accountNumber, initialBalance);
 
         // Save the user to the database
         return userRepository.save(user);
+    }
+
+    private String generateAccountNumber() {
+        Random random = new Random();
+        String accountNumber;
+
+        do {
+            accountNumber = String.format("%010d", random.nextInt(1_000_000_000));
+        } while (userRepository.findByAccountNumber(accountNumber).isPresent());
+
+        return accountNumber;
+    }
+
+    private BigDecimal generateInitialBalance() {
+        Random random = new Random();
+        double min = 50_000.0;
+        double max = 100_000.0;
+        double randomValue = min + (max - min) * random.nextDouble();
+        return new BigDecimal(randomValue).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 
     private boolean isPasswordStrong(String password) {
@@ -75,10 +105,17 @@ public class UserService {
         return StringUtils.hasText(email) && email.contains("@");
     }
 
-    public User login(String email, String password) {
+
+
+    public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                //encode the password and compare it with the encoded password in the database
-                .filter(user -> passwordEncoder.matches(password, user.getPassword()))
-                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
+
+    public BigDecimal getUserBalance(String accountNumber) {
+        User user = userRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with account number: " + accountNumber));
+        return user.getBalance();
+    }
+
 }

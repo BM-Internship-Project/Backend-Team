@@ -24,7 +24,6 @@ public class UserRegistrationDto {
     private Date dateOfBirth;
 
 
-
     public UserRegistrationDto() {
     }
 
