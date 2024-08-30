@@ -19,10 +19,10 @@ public class Transaction {
     private LocalDateTime timestamp;
 
     @ManyToOne
-    private Account senderAccount;
+    private User senderAccount;
 
     @ManyToOne
-    private Account receiverAccount;
+    private User receiverAccount;
 
     // Add getters and setters here
 }
