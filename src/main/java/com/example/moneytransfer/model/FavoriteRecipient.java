@@ -10,5 +10,4 @@ public class FavoriteRecipient {
     private Long id;
     @ManyToOne
     private User user;
-    // Other fields, getters, and setters
 }
