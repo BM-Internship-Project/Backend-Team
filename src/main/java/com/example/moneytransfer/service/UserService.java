@@ -115,12 +115,6 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
 
-    public BigDecimal getUserBalance(String accountNumber) {
-        User user = userRepository.findByAccountNumber(accountNumber)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with account number: " + accountNumber));
-        return user.getBalance();
-    }
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = getUserByEmail(email);

@@ -1,5 +1,11 @@
 package com.example.moneytransfer.dto;
 
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class JwtResponse {
     private String token;
 
@@ -7,11 +13,4 @@ public class JwtResponse {
         this.token = token;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }
