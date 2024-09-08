@@ -8,6 +8,7 @@ import com.example.moneytransfer.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -70,6 +71,24 @@ public class FavoriteRecipientService {
 
         return favorites;
     }
+
+    @Transactional
+    public void removeFavoriteRecipient(Long id, String email) {
+        User user = userService.getUserByEmail(email);
+
+        FavoriteRecipient favoriteRecipient = favoriteRecipientRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Favorite recipient not found."));
+
+        if (!favoriteRecipient.getUser().getId().equals(user.getId())) {
+            throw new IllegalArgumentException("This recipient is not in your favorites.");
+        }
+
+        favoriteRecipientRepository.deleteById(id);
+
+        String cacheKey = FAVORITES_CACHE_PREFIX + user.getId();
+        redisTemplate.delete(cacheKey);
+    }
+
 
     private boolean isAccountNumberValid(String accountNumber) {
         return userRepository.findByAccountNumber(accountNumber).isPresent();
