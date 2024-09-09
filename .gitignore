@@ -1,7 +1,11 @@
-HELP.md
-target/
+### Build Artifacts ###
+# Uncomment these if you need to include build artifacts in your repository for deployment
+# target/
+# build/
 !**/src/main/**/target/
 !**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 ### STS ###
 .apt_generated
@@ -24,9 +28,6 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
