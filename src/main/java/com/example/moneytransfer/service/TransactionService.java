@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -83,4 +84,19 @@ public class TransactionService {
             throw new IllegalArgumentException("Insufficient balance in sender's account.");
         }
     }
+    public List<Transaction> getTransactionHistory() {
+        // Get authenticated user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+        Optional<User> userOpt = userRepository.findByEmail(userEmail);
+
+        if (userOpt.isEmpty()) {
+            throw new IllegalArgumentException("User not found.");
+        }
+
+        User user = userOpt.get();
+        return transactionRepository.findByAccountNumber(user.getAccountNumber());
+    }
+
+
 }
