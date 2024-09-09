@@ -45,7 +45,7 @@ public class TransactionController {
         }
     }
 
-    @PostMapping("/transactions")
+    @GetMapping("/transactions")
     public ResponseEntity<?> getTransactionHistory(@RequestHeader("Authorization") String authorizationHeader) {
         try {
             String token = authorizationHeader.substring(7);
