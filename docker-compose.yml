@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  moneytransfer:
+    image: openjdk:17-jdk-slim
+    container_name: moneytransfer
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
