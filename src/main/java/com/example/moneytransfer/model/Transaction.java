@@ -21,16 +21,25 @@ public class Transaction {
     private LocalDateTime timestamp;
 
     @ManyToOne
-    @JoinColumn(name = "sender_id", nullable = false)
+    @JoinColumn(name = "sender_account_number", nullable = false)
     private User senderAccount;
 
+//    @Column(name = "sender_account_number", nullable = false)
+//    private String senderAccountNumber;
+
     @ManyToOne
-    @JoinColumn(name = "recipient_id", nullable = false)
+    @JoinColumn(name = "receiver_account_number", nullable = false)
     private User receiverAccount;
+
+//    @Column(name = "receiver_account_number", nullable = false)
+//    private String receiverAccountNumber;
 
     @Column(name = "amount", nullable = false, precision = 15, scale = 2)
     private BigDecimal amount;
 
     public Transaction() {
     }
+
+
+
 }
