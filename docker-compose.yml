@@ -19,3 +19,7 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
+
+#     docker build -t moneytransfer:latest
+#     docker run -p 8080:8080 moneytransfer
+#     docker-compose up -d

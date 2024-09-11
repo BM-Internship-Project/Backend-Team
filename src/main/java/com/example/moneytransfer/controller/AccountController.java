@@ -13,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -85,6 +86,31 @@ public class AccountController {
             return ResponseEntity.ok(new BalanceResponse(balance));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/account")
+    public ResponseEntity<?> getAccountDetails() {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String email = authentication.getName(); // Retrieves the logged user's email
+
+            User user = userService.getUserByEmail(email);
+
+            AccountDetailsResponse response = new AccountDetailsResponse(
+                    user.getName(),
+                    user.getEmail(),
+                    user.getAccountNumber(),
+                    user.getCountry(),
+                    user.getDateOfBirth()
+            );
+
+            return ResponseEntity.ok(response);
+
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
         }
     }
 }
