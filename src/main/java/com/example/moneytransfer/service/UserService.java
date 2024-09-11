@@ -99,7 +99,7 @@ public class UserService implements UserDetailsService {
     }
 
     private boolean isPasswordStrong(String password) {
-        // At least one digit, one lower case letter, one upper case letter, and one special character
+        // At least one digit, one lower case letter, one upper case letter, and one special character with a minimum length of 8 characters
         String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$";
         return Pattern.compile(passwordPattern).matcher(password).matches();
     }
