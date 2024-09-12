@@ -47,7 +47,7 @@ This is a **Money Transfer Application** that allows users to transfer money bet
 
 1. **Clone the repository:**
     ```bash
-    git clone ------
+    git clone https://github.com/BM-Internship-Project/Backend-Team.git
     ```
 
 2. **Navigate to the project directory:**
