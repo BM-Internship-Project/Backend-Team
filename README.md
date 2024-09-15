@@ -1,8 +1,10 @@
+---
+
 # Money Transfer Application
 
 ## Overview
 
-This is a **Money Transfer Application** that allows users to transfer money between accounts, view account balances, and manage favorite recipients. The application uses Java Spring Boot for the backend, with Postgres as the database and Redis for caching. It is containerized using Docker and deployed on Postmen.
+This is a **Money Transfer Application** that allows users to transfer money between accounts, view account balances, and manage favorite recipients. The application uses Java Spring Boot for the backend, with PostgreSQL as the database, and Redis for caching. It is containerized using Docker and deployed on Railway.
 
 ## Table of Contents
 
@@ -14,11 +16,14 @@ This is a **Money Transfer Application** that allows users to transfer money bet
 
 ## Features
 - **User registration and login**: Users can sign up and log in securely using email and password.
-- **View Account Details**: Users can view their account information, including current balance, at any time.
+- **View Account Details**: Users can view their account information, including the current balance, at any time.
 - **Money Transfer**: Users can transfer funds between accounts.
 - **Favorite Recipients**: Add and manage favorite recipients for quick and easy transfers.
 - **Transactions**: View transaction history.
 - **Authentication**: Secure login, token-based authentication, and logout functionality.
+- **Rate Limiting**: Uses the Token Bucket algorithm to limit the number of requests a user can make in a given period.
+- **Caching**: Improves performance by using Redis for caching frequently accessed data.
+- **Security**: Special attention to secure transactions and data handling, with token-based authentication and rate-limiting mechanisms in place.
 
 ## Technologies Used
 - **Java 17**: The programming language used for the backend.
@@ -29,8 +34,10 @@ This is a **Money Transfer Application** that allows users to transfer money bet
 - **Redis**: Caching layer used for improving performance.
 - **Maven**: Build tool for compiling and packaging the application.
 - **JWT Token**: For secure token-based authentication.
-- **Postmen**: API documentation and testing.
-- **Docker**: For Containerizing for easy deployment.
+- **Token Bucket Algorithm**: For rate-limiting requests to prevent abuse.
+- **Postman**: API documentation and testing.
+- **Docker**: For containerizing the application for easy deployment.
+- **Railway**: Platform used for deploying the application.
 
 ## API Documentation
 - [Postman API Documentation](https://documenter.getpostman.com/view/31979113/2sAXjSyoUB)
@@ -56,12 +63,12 @@ This is a **Money Transfer Application** that allows users to transfer money bet
     ```
 
 3. **Install dependencies:**
-    - Ensure you have [Java](https://www.oracle.com/java/technologies/downloads), [Maven](https://maven.apache.org/download.cgi) installed. Then, run:
+    - Ensure you have [Java](https://www.oracle.com/java/technologies/downloads) and [Maven](https://maven.apache.org/download.cgi) installed. Then, run:
         ```bash
         mvn install
         ```
 4. **Configure application properties:**
-    -  Edit `src/main/resources/application.properties` to set up your database and other configuration settings.
+    - Edit `src/main/resources/application.properties` to set up your database and other configuration settings.
 
 5. **Run the application**:
     ```bash
@@ -69,4 +76,6 @@ This is a **Money Transfer Application** that allows users to transfer money bet
     ```
 
 ## Deployment
-The application is deployed on Postmen.
+The application is deployed on Railway.
+
+---
