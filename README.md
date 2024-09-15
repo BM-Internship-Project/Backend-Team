@@ -16,7 +16,6 @@ This is a **Money Transfer Application** that allows users to transfer money bet
 
 ## Features
 - **User registration and login**: Users can sign up and log in securely using email and password.
-- **View Account Details**: Users can view their account information, including the current balance, at any time.
 - **Money Transfer**: Users can transfer funds between accounts.
 - **Favorite Recipients**: Add and manage favorite recipients for quick and easy transfers.
 - **Transactions**: View transaction history.
