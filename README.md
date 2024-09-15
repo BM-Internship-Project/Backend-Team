@@ -15,7 +15,8 @@ This is a **Money Transfer Application** that allows users to transfer money bet
 - [Running the Application](#running-the-application)
 
 ## Features
-- **User registration and login**: Users can sign up and log in securely using email and password.
+- **User Registration and Login**: Users can sign up and log in securely using email and password.
+- **Balance Inquiry**: Users can check their account balance at any time.
 - **Money Transfer**: Users can transfer funds between accounts.
 - **Favorite Recipients**: Add and manage favorite recipients for quick and easy transfers.
 - **Transactions**: View transaction history.
@@ -29,9 +30,9 @@ This is a **Money Transfer Application** that allows users to transfer money bet
 - **Spring Boot 3:**
     - Spring Security 6 for authentication and authorization
     - Spring Web for building RESTful APIs
+- **Maven**: Build tool for compiling and packaging the application.
 - **PostgreSQL**: Relational database used to persist account and transaction data.
 - **Redis**: Caching layer used for improving performance.
-- **Maven**: Build tool for compiling and packaging the application.
 - **JWT Token**: For secure token-based authentication.
 - **Token Bucket Algorithm**: For rate-limiting requests to prevent abuse.
 - **Postman**: API documentation and testing.
